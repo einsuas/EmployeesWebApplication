@@ -1,0 +1,52 @@
+<h1 id="tableLabel">Employees</h1>
+<div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <input type="number"
+             class="form-control"
+             placeholder="Employee Id"
+             required
+             [(ngModel)]="employee_id"
+             name="EmployeeId">
+    </div>
+
+    <button type="button"
+            class="form-group btn btn-primary"
+            (click)="search_employees()">
+      Search
+    </button>
+  </div>
+
+</div>
+<p *ngIf="!employees"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employees">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contract Type</th>
+      <th>Role Name</th>
+      <th>Role Description</th>
+      <th>Hourly Salary</th>
+      <th>Monthly Salary</th>
+      <th>Annual Salary</th>
+      <th style="text-align: center;" colspan="2">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.Name }}</td>
+      <td>{{ employee.ContractTypeName }}</td>
+      <td>{{ employee.RoleName }}</td>
+      <td>{{ employee.RoleDescription }}</td>
+      <td>$ {{ employee.HourlySalary }}</td>
+      <td>$ {{ employee.MonthlySalary }}</td>
+      <td>$ {{ employee.AnnualSalary }}</td>
+      <td >
+        <img title='Edit employee' src="assets\images\edit.png" alt="Edit form" style="padding-left: 2px;padding-right: 2px;padding-top: 8px;" (click)="select_form(f)" />
+      </td>
+      <td style="width: 10px;" *ngIf="user.clinic.id == f.clinic.id">
+        <img title='Delete employee' src="assets\images\delete.png" alt="Delete form" style="padding-left: 2px;padding-right: 2px;padding-top: 1vh;" (click)="remove(f)" /></td>
+    </tr>
+  </tbody>
+</table>
