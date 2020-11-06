@@ -42,11 +42,14 @@
       <td>$ {{ employee.HourlySalary }}</td>
       <td>$ {{ employee.MonthlySalary }}</td>
       <td>$ {{ employee.AnnualSalary }}</td>
-      <td >
-        <img title='Edit employee' src="assets\images\edit.png" alt="Edit form" style="padding-left: 2px;padding-right: 2px;padding-top: 8px;" (click)="select_form(f)" />
+      <td>
+        <img title='Edit employee' src="assets\images\edit.png" alt="Edit employee" style="padding-left: 2px;padding-right: 2px;padding-top: 8px;" (click)="select_employee(employee)" />
       </td>
-      <td style="width: 10px;" *ngIf="user.clinic.id == f.clinic.id">
-        <img title='Delete employee' src="assets\images\delete.png" alt="Delete form" style="padding-left: 2px;padding-right: 2px;padding-top: 1vh;" (click)="remove(f)" /></td>
-    </tr>
+      <td style="width: 10px;">
+        <img title='Fire employee' src="assets\images\fire.png" alt="Fire employee" style="padding-left: 2px;padding-right: 2px;padding-top: 1vh;" (click)="fire(employee)" />
+      </td>
+  </tr>
   </tbody>
 </table>
+<!-- Confirm view  -->
+<app-confirm_view [(visible)]="show_confirmation_view" [(answer)]="confirmation_answer" [(message)]="message"></app-confirm_view>

@@ -9,6 +9,14 @@ export class EmployeesComponent {
   public employees: Employee[];
   public employee_id: number;
 
+  public selected_employee: Employee;
+
+  confirmation_answer: boolean;
+  show_confirmation_view: boolean;
+  message: string;
+  pending_confirmation_action: string;
+  pending_object: any;
+
   private http: HttpClient;
   private baseUrl: string;
 
@@ -16,6 +24,24 @@ export class EmployeesComponent {
     this.http = http;
     this.baseUrl = baseUrl;
     this.search_employees();
+  }
+
+  ngDoCheck() {
+    if (this.confirmation_answer != undefined) {
+        if (this.confirmation_answer) {
+          switch (this.pending_confirmation_action) {
+          case 'fire_employee':
+              {
+                this.fire(this.pending_object, true);
+                break;
+              }
+          }
+        }
+        else {
+          this.pending_confirmation_action = "";
+          this.confirmation_answer = undefined;
+        }
+      }
   }
 
   search_employees() {
@@ -29,6 +55,23 @@ export class EmployeesComponent {
       this.http.get<Employee[]>(url).subscribe(result => {
         this.employees = result;
       }, error => alert(error));
+    }
+  }
+
+  select_employee(selected_employee: Employee) {
+
+    this.selected_employee = JSON.parse(JSON.stringify(selected_employee));
+  }
+
+  fire(employee: Employee, confirmed = false) {
+    if (confirmed) {
+      this.confirmation_answer = undefined;
+    }
+    else {
+      this.show_confirmation_view = true;
+      this.pending_object = employee;
+      this.pending_confirmation_action = 'fire_employee';
+      this.message = 'Do you want to fire the current employee?';
     }
   }
 }

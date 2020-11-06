@@ -1,0 +1,19 @@
+<div *ngIf="visible" class="dialog" style="top: 35vh;">
+  <br>
+  <div style="text-align: center;">
+    <h4 >{{message}}</h4>
+    <div>
+      <button type="button"
+              class="form-group btn btn-primary"
+              (click)="confirm(true)">
+        Yes
+      </button>
+      <button type="button"
+              class="form-group btn btn-primary"
+              (click)="confirm(false)">
+        No
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="visible" class="overlay"></div>
