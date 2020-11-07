@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { EmployeesComponent } from './Employees/employees.component';
+import { EmployeeFormComponent } from './Employees/Employee-form/employee-form.component';
 import { ConfirmViewComponent } from './confirm_view/confirm_view.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ConfirmViewComponent } from './confirm_view/confirm_view.component';
     NavMenuComponent,
     HomeComponent,
     EmployeesComponent,
+    EmployeeFormComponent,
     ConfirmViewComponent
   ],
   imports: [

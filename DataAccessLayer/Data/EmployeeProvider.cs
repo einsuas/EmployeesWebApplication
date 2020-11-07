@@ -8,7 +8,7 @@ using DataAccessLayer.Utils;
 
 namespace DataAccessLayer.Data
 {
-    public class  EmployeeProvider
+    public class  EmployeeProvider: IEmployeeProvider
     {
         public async Task<List<EmployeeInfo>> LoadEmployees()
         {

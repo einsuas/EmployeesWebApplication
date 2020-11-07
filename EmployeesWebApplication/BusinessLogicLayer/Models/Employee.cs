@@ -1,8 +1,9 @@
 ﻿
+using Newtonsoft.Json;
 
 namespace EmployeesWebApplication.BusinessLogicLayer.Models
 {
-    public abstract class Employee 
+    public class Employee 
     {
         public long Id { get; set; }
 
@@ -21,5 +22,10 @@ namespace EmployeesWebApplication.BusinessLogicLayer.Models
         public long MonthlySalary { get; set; }
 
         public virtual long AnnualSalary { get; }
+
+        public static Employee GetObjectFromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<Employee>(json); ;
+        }
     }
 }

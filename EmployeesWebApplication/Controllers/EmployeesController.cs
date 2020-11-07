@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccessLayer.Data;
-using DataAccessLayer.Models;
+﻿using System.Threading.Tasks;
 using EmployeesWebApplication.BusinessLogicLayer;
 using EmployeesWebApplication.BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +22,27 @@ namespace EmployeesWebApplication.Controllers
         public string Get( long? employeeId)
         {
             return JsonConvert.SerializeObject(Manager.EmployeeProcessor.GetEmployees(employeeId));
+        }
+
+        [HttpDelete]
+        public bool Delete(long employeeId)
+        {
+            return Manager.EmployeeProcessor.DeleteEmployee(employeeId);
+        }
+
+
+        [HttpPost]
+        [Route("UpdateEmployee")]
+        public async Task<bool> UpdateEmployee()
+        {
+            var employee = Employee.GetObjectFromJson(await GetBodyAsText());
+            return Manager.EmployeeProcessor.UpdateEmployee(employee);
+        }
+
+        protected async Task<string> GetBodyAsText()
+        {
+            using var reader = new System.IO.StreamReader(Request.Body);
+            return await reader.ReadToEndAsync();
         }
     }
 }

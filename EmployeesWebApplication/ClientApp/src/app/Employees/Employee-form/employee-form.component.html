@@ -1,0 +1,89 @@
+<div class="container dialog" *ngIf="visible" style="height: fit-content;">
+  <button (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+  <h4 class="card-title text-center">Employee</h4>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+    <div style="overflow-y: auto; height: 70vh;">
+      <div class="card card-block" style="padding: 10px;">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Name"
+                 required
+                 [(ngModel)]="employee.Name"
+                 name="name">
+        </div>
+        <div class="form-group">
+          <label>Contract Type</label>
+          <input type="text"
+                 disabled
+                 class="form-control"
+                 placeholder="Contract Type"
+                 required
+                 [(ngModel)]="employee.ContractTypeName"
+                 name="contractTypeName">
+        </div>
+        <div class="form-group">
+          <label>Role Name</label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Role Name"
+                 required
+                 [(ngModel)]="employee.RoleName"
+                 name="roleName">
+        </div>
+        <div class="form-group">
+          <label>Role Description</label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Role Description"
+                 [(ngModel)]="employee.RoleDescription"
+                 name="roleDescription">
+        </div>
+        <div class="form-group">
+          <label>Hourly Salary</label>
+          <input type="number"
+                 min="0"
+                 class="form-control"
+                 placeholder="Hourly Salary"
+                 required
+                 [(ngModel)]="employee.HourlySalary"
+                 name="hourlySalary">
+        </div>
+        <div class="form-group">
+          <label>Monthly Salary</label>
+          <input type="number"
+                 min="0"
+                 class="form-control"
+                 placeholder="Monthly Salary"
+                 required
+                 [(ngModel)]="employee.MonthlySalary"
+                 name="monthlySalary">
+        </div>
+        <div class="form-group">
+          <label>Annual Salary</label>
+          <input type="number"
+                 min="0"
+                 class="form-control"
+                 placeholder="Annual Salary"
+                 required
+                 disabled
+                 [(ngModel)]="employee.AnnualSalary"
+                 name="annualSalary">
+        </div>
+        <br>
+        <div class="text-center">
+          <button type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!registerForm.form.valid">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+<div *ngIf="visible" class="overlay"></div>
+<!-- Confirm view  >
+<app-confirm_view  [(visible)]="show_confirmation_view" [(answer)]="confirmation_answer" [(message)]="message"></app-confirm_view-->

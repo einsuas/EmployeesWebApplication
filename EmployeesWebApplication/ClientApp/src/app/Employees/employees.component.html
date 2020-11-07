@@ -48,8 +48,10 @@
       <td style="width: 10px;">
         <img title='Fire employee' src="assets\images\fire.png" alt="Fire employee" style="padding-left: 2px;padding-right: 2px;padding-top: 1vh;" (click)="fire(employee)" />
       </td>
-  </tr>
+    </tr>
   </tbody>
 </table>
 <!-- Confirm view  -->
 <app-confirm_view [(visible)]="show_confirmation_view" [(answer)]="confirmation_answer" [(message)]="message"></app-confirm_view>
+<!-- Detail forms  -->
+<app-employee-form  [(visible)]="show_employee_dialog" [(employee)]="selected_employee" [(update)]="update_list" ></app-employee-form>

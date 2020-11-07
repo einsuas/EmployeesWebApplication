@@ -9,10 +9,10 @@ namespace EmployeesWebApplication.BusinessLogicLayer
 {
     public class EmployeeProcessor : IEmployeeProcessor
     {
-        private static List<Employee> employeeRepository = new List<Employee>();
+        private List<Employee> _employeeRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeProcessor(List<EmployeeInfo> employeesInfo)
+        public EmployeeProcessor(IEnumerable<EmployeeInfo> employeesInfo)
         {
             var mapConfig = new MapperConfiguration(m =>
             {
@@ -20,42 +20,76 @@ namespace EmployeesWebApplication.BusinessLogicLayer
                 m.CreateMap<EmployeeInfo, EmployeeHourlyContract>();
             });
             _mapper = mapConfig.CreateMapper();
-
+             
             ProcessEmployees(employeesInfo);
         }
 
-
-        public void ProcessEmployees(List<EmployeeInfo> employeesInfo)
+        public void ProcessEmployees(IEnumerable<EmployeeInfo> employeesInfo)
         {
+            _employeeRepository = new List<Employee>();
             foreach (var employee in employeesInfo)
             {
                 switch (employee.ContractTypeName)
                 {
                     case ContractType.HourlySalary:
-                        employeeRepository.Add(_mapper.Map<EmployeeHourlyContract>(employee));
+                        _employeeRepository.Add(_mapper.Map<EmployeeHourlyContract>(employee));
                         break;
                     case ContractType.MonthlySalary:
-                        employeeRepository.Add(_mapper.Map<EmployeeMonthlyContract>(employee));
+                        _employeeRepository.Add(_mapper.Map<EmployeeMonthlyContract>(employee));
                         break;
                 }
             }
         }
 
-        public List<Employee> GetEmployees(long? id = null)
+        public IEnumerable<Employee> GetEmployees(long? id = null)
         {
             var employees = new List<Employee>();
             if (id != null)
             {
-                var employee = employeeRepository.FirstOrDefault(e => e.Id == id);
+                var employee = _employeeRepository.FirstOrDefault(e => e.Id == id);
                 if (employee != null)
                     employees.Add(employee);
             }
             else
             {
-                return employeeRepository;
+                return _employeeRepository;
             }
 
             return employees;
+        }
+
+        public bool DeleteEmployee(long id)
+        {
+            var result = false; 
+            var employee = _employeeRepository.Find( e=> e.Id == id);
+            if (employee != null)
+            {
+                _employeeRepository.Remove(employee);
+                result = true;
+            }
+            return result;
+        }
+
+        public bool UpdateEmployee(Employee employee)
+        {
+            var result = false;
+            var existingEmployee = _employeeRepository.FirstOrDefault( e => e.Id == employee.Id);
+            if (existingEmployee != null)
+            {
+                if (existingEmployee.Name != employee.Name)
+                    existingEmployee.Name = employee.Name;
+                if (existingEmployee.RoleDescription != employee.RoleDescription)
+                    existingEmployee.RoleDescription = employee.RoleDescription;
+                if (existingEmployee.RoleName != employee.RoleName)
+                    existingEmployee.RoleName = employee.RoleName;
+                if (existingEmployee.HourlySalary != employee.HourlySalary)
+                    existingEmployee.HourlySalary = employee.HourlySalary;
+                if (existingEmployee.MonthlySalary != employee.MonthlySalary)
+                    existingEmployee.MonthlySalary = employee.MonthlySalary;
+                result = true;
+            }
+
+            return result;
         }
     }
 

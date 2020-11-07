@@ -6,10 +6,12 @@ namespace EmployeesWebApplication.BusinessLogicLayer
 {
     public interface IEmployeeProcessor
     {
-        void ProcessEmployees(List<EmployeeInfo> employeesInfo);
+        void ProcessEmployees(IEnumerable<EmployeeInfo> employeesInfo);
 
-        List<Employee> GetEmployees(long? id = null);
+        IEnumerable<Employee> GetEmployees(long? id = null);
+
+        public bool DeleteEmployee(long id);
+
+        public bool UpdateEmployee(Employee employee);
     }
-
-
 }
